@@ -1,0 +1,23 @@
+{
+  "name": "PokemonAutoFilter",
+    "description": "This extension enables you to tilter pokemon",
+    "version": "1.0",
+    "icons": {
+      "128": "al.png"
+      },
+    "background": {
+      "scripts" : ["background.js"],
+      "peresistent" : true
+    },
+    "browser_action":{
+      "default_popup" : "popup.html"
+    },
+    "permissions": [
+      "notifications",
+      "background",
+      "tabs",
+      "https://skiplagged.com/api/*"
+    ],
+    "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
+    "manifest_version": 2
+}
