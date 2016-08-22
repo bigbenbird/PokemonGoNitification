@@ -16,6 +16,9 @@
       "notifications",
       "background",
       "tabs",
+      "webRequest",
+       "webRequestBlocking",
+      "https://skipcdn.net/img/pokemon/small/*",
       "https://skiplagged.com/api/*"
     ],
     "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",

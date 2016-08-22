@@ -2,6 +2,24 @@ var time_id = 0;
 function renderStatus(statusText) {
     console.log(statusText)
 }
+chrome.webRequest.onBeforeRequest.addListener(
+  function(info) {
+    //console.log("image intercepted: " + info.url);
+    // Redirect the lolcal request to a random loldog URL.
+    pokemon_id = info.url.match("[0-9]+");
+    new_url = chrome.extension.getURL("pixel_icons/" + pokemon_id + ".png");
+    //console.log("new url:" + new_url);
+    return {redirectUrl: new_url};
+  },
+  // filters
+  {
+    urls: [
+      "https://skipcdn.net/img/pokemon/small/*"
+    ],
+    types: ["image"]
+  },
+  // extraInfoSpec
+  ["blocking"]);
 
 function show_notification(max_item){
     console.log(max_item);
@@ -54,7 +72,8 @@ function network_filter(callback, errorCallback) {
             for(var i = 0, l = pokemons_list.length; i < l; i++)
             {
                 item = pokemons_list[i];
-                filter_pokemon = "Dragonite";
+                filter_pokemon = "Lapras";
+                //filter_pokemon = "Snorlax";
                 //filter_pokemon = "Dratini";
                 if(item.pokemon_name == filter_pokemon)
                 {
