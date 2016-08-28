@@ -1,4 +1,5 @@
 var time_id = 0;
+var started = false;
 function renderStatus(statusText) {
     console.log(statusText)
 }
@@ -48,6 +49,8 @@ function show_notification(max_item){
     chrome.notifications.create("0", opt, function() {});
     chrome.notifications.onClicked.addListener(function(){
         clearInterval(time_id);
+        started = false;
+        chrome.browserAction.setIcon({path:"gray.png"});
         console.log("close interval");
     })
 }
@@ -102,11 +105,17 @@ function network_filter(callback, errorCallback) {
     xhr.send();
 }
 function stop(){
+    started = false;
     clearInterval(time_id);
+    chrome.browserAction.setIcon({path:"gray.png"});
     console.log("close interval");
 }
 function start(){
     console.log("entry background script's start function")
+    chrome.browserAction.setIcon({path:"rsz_1180x180.png"});
+    if( started == true)
+        return;
+    started = true;
     time_id = setInterval(network_filter, 2500, show_notification, function(errMessage){
         renderStatus("Cannot display connect.\t" + errMessage);
     });
