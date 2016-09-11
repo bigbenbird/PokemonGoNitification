@@ -24,6 +24,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 
 function show_notification(max_item){
     console.log(max_item);
+    filter_pokemon = max_item.pokemon_name;
     if (!String.format) {
   String.format = function(format) {
     var args = Array.prototype.slice.call(arguments, 1);
@@ -72,17 +73,17 @@ function network_filter(callback, errorCallback) {
             var data = JSON.parse(xhr.responseText);
             pokemons_list = data.pokemons;
             var max_item = null
+            filter_pokemon_list = ["Lapras", "Snorlax", "Dragonite"]
             for(var i = 0, l = pokemons_list.length; i < l; i++)
             {
                 item = pokemons_list[i];
-                filter_pokemon = "Lapras";
-                //filter_pokemon = "Snorlax";
-                //filter_pokemon = "Dratini";
-                if(item.pokemon_name == filter_pokemon)
-                {
-                    if(max_item == null || item.expires > max_item.expires)
-                        max_item = item;
-                }
+                filter_pokemon_list.forEach(function (element, index, array){
+		            if(item.pokemon_name == element)
+		            {
+		                    if(max_item == null || item.expires > max_item.expires)
+		                        max_item = item;
+		            }
+                	});
             }
             if( max_item != null)
             {
